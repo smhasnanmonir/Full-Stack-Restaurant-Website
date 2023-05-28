@@ -18,7 +18,11 @@ const Menu = () => {
       <Helmet>
         <title>Bistro Boss | Menu</title>
       </Helmet>
-      <Cover img={menuImg} heading="Our Menu"></Cover>
+      <Cover
+        img={menuImg}
+        heading="Our Menu"
+        subHeading="Would you like to try a dish?"
+      ></Cover>
       <SharedTitle
         heading="Don't Miss"
         subHeading="Today's offer"
@@ -28,7 +32,36 @@ const Menu = () => {
       {/* Desserts */}
       <MenuCategory
         items={dessert}
-        titles="Dedessertsserts"
+        heading="Desserts"
+        titles="Desserts"
+        coverImg={dessertImg}
+      ></MenuCategory>
+      {/* pizza */}
+      <MenuCategory
+        items={pizza}
+        heading="Pizza"
+        titles="pizza"
+        coverImg={dessertImg}
+      ></MenuCategory>
+      {/* pizza */}
+      <MenuCategory
+        items={pizza}
+        heading="Pizza"
+        titles="pizza"
+        coverImg={dessertImg}
+      ></MenuCategory>
+      {/* soup */}
+      <MenuCategory
+        items={soup}
+        heading="Soup"
+        titles="soup"
+        coverImg={dessertImg}
+      ></MenuCategory>
+      {/* salad */}
+      <MenuCategory
+        items={salad}
+        heading="Salad"
+        titles="salad"
         coverImg={dessertImg}
       ></MenuCategory>
     </div>

@@ -1,23 +1,16 @@
-const Cover = ({ img, heading }) => {
+const Cover = ({ img, heading, subHeading }) => {
   return (
-    <div className="mb-[70px]">
-      <div
-        className="chefService md:p-[150px]"
-        style={{
-          backgroundImage: `url("${img}")`,
-          backgroundPosition: "center",
-          backgroundRepeat: "no-repeat",
-          backgroundSize: "cover",
-        }}
-      >
-        <div className="p-[55px] bg-white w-3/4 mx-auto">
-          <h1 className="text-3xl text-center">{heading}</h1>
-          <p className="mt-[8px]">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit.
-            Necessitatibus, libero accusamus laborum deserunt ratione dolor
-            officiis praesentium! Deserunt magni aperiam dolor eius dolore at,
-            nihil iusto ducimus incidunt quibusdam nemo.
-          </p>
+    <div
+      className="hero h-[700px]"
+      style={{
+        backgroundImage: `url("${img}")`,
+      }}
+    >
+      <div className="hero-overlay bg-opacity-60 w-full h-[250px]"></div>
+      <div className="hero-content text-center text-neutral-content">
+        <div className="max-w-md">
+          <h1 className="mb-5 text-5xl font-bold">{heading}</h1>
+          <p className="mb-5">{subHeading}</p>
         </div>
       </div>
     </div>

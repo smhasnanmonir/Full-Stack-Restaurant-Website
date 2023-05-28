@@ -6,4 +6,10 @@
   .h1-category {
     @apply text-4xl text-center -mt-16 text-white drop-shadow-md uppercase;
   }
+  .btn-one {
+    @apply uppercase px-[25px] py-[10px] bg-[#d6d6d6] text-[#be8500] rounded-md border-b-2 border-[#be8500] hover:scale-105 transition-all duration-200;
+  }
+  .btn-two {
+    @apply bg-[#202938] px-[25px] py-[10px] rounded-md text-[#BB8506] hover:scale-105 transition-all duration-200;
+  }
 }

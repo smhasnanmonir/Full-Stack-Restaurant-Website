@@ -21,7 +21,7 @@ const CustomerReview = () => {
   }, []);
   console.log(opinion);
   return (
-    <section>
+    <section className="mb-[45px]">
       <SharedTitle
         heading="What out Client Say"
         subHeading="Testimonials"

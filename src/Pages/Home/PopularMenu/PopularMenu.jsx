@@ -1,19 +1,10 @@
-import { useEffect, useState } from "react";
 import SharedTitle from "../../Components/SharedTitle/SharedTitle";
 import MenuCard from "../../Shared/MenuCard/MenuCard";
+import useMenu from "../../../hooks/useMenu";
 
 const PopularMenu = () => {
-  const [menu, setMenu] = useState([]);
-  useEffect(() => {
-    fetch(
-      "https://raw.githubusercontent.com/smhasnanmonir/API-Testing/main/popular.json"
-    )
-      .then((res) => res.json())
-      .then((data) => {
-        const popularItems = data.filter((item) => item.category === "popular");
-        setMenu(popularItems);
-      });
-  }, []);
+  const [menu] = useMenu();
+  const popularItems = menu.filter((item) => item.category === "popular");
   return (
     <div>
       <SharedTitle
@@ -21,7 +12,7 @@ const PopularMenu = () => {
         subHeading={"Popular Items"}
       ></SharedTitle>
       <div className="grid md:grid-cols-2 gap-10">
-        {menu.map((menuItem) => (
+        {popularItems.map((menuItem) => (
           <MenuCard key={menuItem._id} menuItem={menuItem}></MenuCard>
         ))}
       </div>

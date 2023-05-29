@@ -13,9 +13,7 @@ import logo from "../../../../assets/icon/quote.png";
 const CustomerReview = () => {
   const [opinion, setOpinion] = useState([]);
   useEffect(() => {
-    fetch(
-      "https://raw.githubusercontent.com/smhasnanmonir/API-Testing/main/ReviewAPI"
-    )
+    fetch("http://localhost:5000/menu")
       .then((res) => res.json())
       .then((data) => setOpinion(data));
   }, []);

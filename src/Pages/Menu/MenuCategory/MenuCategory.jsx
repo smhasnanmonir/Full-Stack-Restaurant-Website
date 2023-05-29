@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import Cover from "../../Shared/Cover/Cover";
 import ItemsCover from "../../Shared/Cover/ItemsCover";
 import MenuCard from "../../Shared/MenuCard/MenuCard";
@@ -16,6 +17,11 @@ const MenuCategory = ({ items, titles, coverImg, heading }) => {
         {items.map((menuItem) => (
           <MenuCard key={menuItem._id} menuItem={menuItem}></MenuCard>
         ))}
+      </div>
+      <div className="w-[150px] mx-auto">
+        <Link to={`/order/${titles}`} className="btn-three text-center">
+          Go To Order
+        </Link>
       </div>
     </div>
   );

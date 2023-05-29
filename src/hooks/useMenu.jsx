@@ -4,9 +4,7 @@ const useMenu = () => {
   const [menu, setMenu] = useState([]);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
-    fetch(
-      "https://raw.githubusercontent.com/smhasnanmonir/API-Testing/main/popular.json"
-    )
+    fetch("http://localhost:5000/menu")
       .then((res) => res.json())
       .then((data) => {
         setMenu(data);

@@ -4,7 +4,8 @@ import NavBar from "../../Pages/Shared/NavBar/NavBar";
 
 const Main = () => {
   const location = useLocation();
-  const noNavBar = location.pathname.includes("login");
+  const noNavBar =
+    location.pathname.includes("login") || location.pathname.includes("signup");
   return (
     <div>
       {noNavBar || <NavBar></NavBar>}

@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from "react";
 import {
   LoadCanvasTemplate,
   loadCaptchaEnginge,
@@ -5,16 +6,22 @@ import {
 } from "react-simple-captcha";
 import auth1 from "../../assets/others/authentication.png";
 import auth2 from "../../assets/others/authentication1.png";
-import "./Login.css";
-import { useContext, useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
-import { AuthContext } from "../../Providers/AuthProvider";
+import { useForm } from "react-hook-form";
 import { Helmet } from "react-helmet-async";
-const LogIn = () => {
-  // Context
-  const { signIn, user } = useContext(AuthContext);
+
+const SignUp = () => {
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm();
+  const onSubmit = (data) => {
+    console.log(data);
+  };
+  console.log(watch("example"));
   const [disabled, setDisabled] = useState(true);
-  const [newUser, setNewUser] = useState(null);
+
   const captchaRef = useRef(null);
   useEffect(() => {
     loadCaptchaEnginge(6);
@@ -28,20 +35,8 @@ const LogIn = () => {
       setDisabled(true);
     }
   };
-
-  const handleLogin = (event) => {
-    event.preventDefault();
-    const form = event.target;
-    const email = form.email.value;
-    const password = form.password.value;
-    // const passwordConfirmation = { email, password };
-    signIn(email, password).then((result) => {
-      const user = result.user;
-      console.log(user);
-    });
-  };
   return (
-    <div>
+    <>
       <Helmet>
         <title>Bistro Boss | Sign Up</title>
       </Helmet>
@@ -51,10 +46,27 @@ const LogIn = () => {
             <img src={auth2} />
           </div>
           <form
-            onSubmit={handleLogin}
+            onSubmit={handleSubmit(onSubmit)}
             className="card w-1/2 max-w-sm shadow-2xl bg-base-100"
           >
             <div className="card-body">
+              <div className="form-control">
+                <label className="label">
+                  <span className="label-text">Name</span>
+                </label>
+                <input
+                  type="text"
+                  name="name"
+                  {...register("name", { required: true })}
+                  placeholder="name"
+                  className="input input-bordered"
+                />
+                {errors.name && (
+                  <span className="text-red-600 mt-2">
+                    This field is required
+                  </span>
+                )}
+              </div>
               <div className="form-control">
                 <label className="label">
                   <span className="label-text">Email</span>
@@ -62,9 +74,15 @@ const LogIn = () => {
                 <input
                   type="text"
                   name="email"
+                  {...register("email", { required: true })}
                   placeholder="email"
                   className="input input-bordered"
                 />
+                {errors.email && (
+                  <span className="text-red-600 mt-2">
+                    This field is required
+                  </span>
+                )}
               </div>
               <div className="form-control">
                 <label className="label">
@@ -73,9 +91,15 @@ const LogIn = () => {
                 <input
                   type="password"
                   name="password"
+                  {...register("password", { required: true, minLength: 6 })}
                   placeholder="password"
                   className="input input-bordered"
                 />
+                {errors.password && (
+                  <span className="text-red-600 mt-2" role="alert">
+                    Minimum 6 length Password required.
+                  </span>
+                )}
               </div>
               <div className="form-control">
                 <label className="label">
@@ -100,23 +124,15 @@ const LogIn = () => {
                   disabled={disabled}
                   className="btn btn-primary"
                   type="submit"
-                  value="Login"
+                  value="Register"
                 />
               </div>
             </div>
           </form>
         </div>
       </div>
-      <div className="w-[135px] mx-auto flex gap-3">
-        <Link className="btn btn-primary" to="/signup">
-          New? Sign Up
-        </Link>
-        <Link className="btn btn-primary" to="/">
-          Back To Home
-        </Link>
-      </div>
-    </div>
+    </>
   );
 };
 
-export default LogIn;
+export default SignUp;

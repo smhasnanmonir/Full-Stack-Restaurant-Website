@@ -10,11 +10,11 @@ import { useContext, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../Providers/AuthProvider";
 import { Helmet } from "react-helmet-async";
+import Swal from "sweetalert2";
 const LogIn = () => {
   // Context
   const { signIn, user } = useContext(AuthContext);
   const [disabled, setDisabled] = useState(true);
-  const [newUser, setNewUser] = useState(null);
   const captchaRef = useRef(null);
   useEffect(() => {
     loadCaptchaEnginge(6);
@@ -35,10 +35,15 @@ const LogIn = () => {
     const email = form.email.value;
     const password = form.password.value;
     // const passwordConfirmation = { email, password };
-    signIn(email, password).then((result) => {
-      const user = result.user;
-      console.log(user);
-    });
+    signIn(email, password)
+      .then((result) => {
+        const user = result.user;
+        Swal.fire("Login Successful");
+      })
+      .catch((error) => {
+        console.log(error);
+        Swal.fire("Maybe you typed your email address or password incorrectly");
+      });
   };
   return (
     <div>

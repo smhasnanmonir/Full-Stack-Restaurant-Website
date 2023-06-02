@@ -1,15 +1,12 @@
-import { useEffect, useRef, useState } from "react";
-import {
-  LoadCanvasTemplate,
-  loadCaptchaEnginge,
-  validateCaptcha,
-} from "react-simple-captcha";
+import { useContext, useEffect, useRef, useState } from "react";
 import auth1 from "../../assets/others/authentication.png";
 import auth2 from "../../assets/others/authentication1.png";
 import { useForm } from "react-hook-form";
 import { Helmet } from "react-helmet-async";
+import { AuthContext } from "../../Providers/AuthProvider";
 
 const SignUp = () => {
+  const { createUser } = useContext(AuthContext);
   const {
     register,
     handleSubmit,
@@ -17,24 +14,13 @@ const SignUp = () => {
     formState: { errors },
   } = useForm();
   const onSubmit = (data) => {
-    console.log(data);
+    createUser(data.email, data.password).then((result) => {
+      const user = result.user;
+      console.log(user);
+    });
   };
   console.log(watch("example"));
-  const [disabled, setDisabled] = useState(true);
 
-  const captchaRef = useRef(null);
-  useEffect(() => {
-    loadCaptchaEnginge(6);
-  }, []);
-
-  const handleCaptcha = () => {
-    const user_captcha_value = captchaRef.current.value;
-    if (validateCaptcha(user_captcha_value)) {
-      setDisabled(false);
-    } else {
-      setDisabled(true);
-    }
-  };
   return (
     <>
       <Helmet>
@@ -101,27 +87,8 @@ const SignUp = () => {
                   </span>
                 )}
               </div>
-              <div className="form-control">
-                <label className="label">
-                  <LoadCanvasTemplate />
-                </label>
-                <input
-                  ref={captchaRef}
-                  type="text"
-                  name="captcha"
-                  placeholder="Type the captcha"
-                  className="input input-bordered"
-                />
-                <button
-                  onClick={handleCaptcha}
-                  className="btn btn-outline btn-xs mt-1"
-                >
-                  Validate Captcha
-                </button>
-              </div>
               <div className="form-control mt-6">
                 <input
-                  disabled={disabled}
                   className="btn btn-primary"
                   type="submit"
                   value="Register"

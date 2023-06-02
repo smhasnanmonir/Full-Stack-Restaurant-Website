@@ -5,7 +5,7 @@ import MenuCard from "../../Shared/MenuCard/MenuCard";
 
 const MenuCategory = ({ items, titles, coverImg, heading }) => {
   return (
-    <div className="p-8">
+    <div className="py-8">
       {titles && (
         <ItemsCover
           img={coverImg}

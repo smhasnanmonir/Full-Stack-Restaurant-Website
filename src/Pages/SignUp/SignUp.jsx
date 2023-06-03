@@ -5,10 +5,10 @@ import { useForm } from "react-hook-form";
 import { Helmet } from "react-helmet-async";
 import { AuthContext } from "../../Providers/AuthProvider";
 import Swal from "sweetalert2";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 
 const SignUp = () => {
-  const { createUser, user } = useContext(AuthContext);
+  const { createUser, user, updateUserProfile } = useContext(AuthContext);
   const {
     register,
     handleSubmit,
@@ -20,6 +20,12 @@ const SignUp = () => {
       .then((result) => {
         const user = result.user;
         console.log(user);
+        <Navigate to="/"></Navigate>;
+        updateUserProfile(data.name, data.photoURL)
+          .then(() => {
+            console.log("User Updated");
+          })
+          .catch((error) => console.log(error));
         Swal.fire({
           title: "Register Success",
           showClass: {
@@ -82,6 +88,22 @@ const SignUp = () => {
                       name="name"
                       {...register("name", { required: true })}
                       placeholder="name"
+                      className="input input-bordered"
+                    />
+                    {errors.name && (
+                      <span className="text-red-600 mt-2">
+                        This field is required
+                      </span>
+                    )}
+                  </div>
+                  <div className="form-control">
+                    <label className="label">
+                      <span className="label-text">Photo URL</span>
+                    </label>
+                    <input
+                      type="text"
+                      {...register("PhotoURL", { required: true })}
+                      placeholder="Photo URL"
                       className="input input-bordered"
                     />
                     {errors.name && (

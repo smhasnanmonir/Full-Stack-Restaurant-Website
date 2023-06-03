@@ -1,4 +1,38 @@
+import { useContext } from "react";
+import { AuthContext } from "../../../Providers/AuthProvider";
+import { data } from "autoprefixer";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
+
 const FoodCard = ({ items }) => {
+  const navigate = useNavigate();
+  const { user } = useContext(AuthContext);
+  const handleAddToCart = (items) => {
+    console.log(items);
+    if (user) {
+      fetch("http://localhost:5000/carts")
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.insertedId) {
+            Swal.fire("Added to cart.");
+          }
+        });
+    } else {
+      Swal.fire({
+        title: "Please log in to order food",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, take me to login page",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          navigate("/login");
+        }
+      });
+    }
+  };
   return (
     <div className="card-1 bg-[#e9e6e2] text-center relative">
       <p className="absolute right-3 top-3 px-4 py-2 bg-black text-white">
@@ -8,7 +42,9 @@ const FoodCard = ({ items }) => {
       <div className="p-[24px] space-y-2">
         <h1 className="text-xl font-bold">{items.name}</h1>
         <p className="">{items.recipe}</p>
-        <button className="btn-one">add to cart</button>
+        <button onClick={() => handleAddToCart(items)} className="btn-one">
+          add to cart
+        </button>
       </div>
     </div>
   );

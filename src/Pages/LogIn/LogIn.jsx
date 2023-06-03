@@ -7,21 +7,25 @@ import auth1 from "../../assets/others/authentication.png";
 import auth2 from "../../assets/others/authentication1.png";
 import "./Login.css";
 import { useContext, useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Providers/AuthProvider";
 import { Helmet } from "react-helmet-async";
 import Swal from "sweetalert2";
 const LogIn = () => {
+  //location
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
+
   // Context
   const { signIn, user } = useContext(AuthContext);
   const [disabled, setDisabled] = useState(true);
-  const captchaRef = useRef(null);
   useEffect(() => {
     loadCaptchaEnginge(6);
   }, []);
 
-  const handleCaptcha = () => {
-    const user_captcha_value = captchaRef.current.value;
+  const handleCaptcha = (e) => {
+    const user_captcha_value = e.target.value;
     if (validateCaptcha(user_captcha_value)) {
       setDisabled(false);
     } else {
@@ -38,6 +42,7 @@ const LogIn = () => {
     signIn(email, password)
       .then((result) => {
         const user = result.user;
+        navigate(from, { replace: true });
         Swal.fire("Login Successful");
       })
       .catch((error) => {
@@ -87,18 +92,15 @@ const LogIn = () => {
                   <LoadCanvasTemplate />
                 </label>
                 <input
-                  ref={captchaRef}
+                  onBlur={handleCaptcha}
                   type="text"
                   name="captcha"
                   placeholder="Type the captcha"
                   className="input input-bordered"
                 />
-                <button
-                  onClick={handleCaptcha}
-                  className="btn btn-outline btn-xs mt-1"
-                >
+                {/* <button className="btn btn-outline btn-xs mt-1">
                   Validate Captcha
-                </button>
+                </button> */}
               </div>
               <div className="form-control mt-6">
                 <input

@@ -3,17 +3,34 @@ import { AuthContext } from "../../../Providers/AuthProvider";
 import { data } from "autoprefixer";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
+import useCart from "../../../hooks/useCart";
 
 const FoodCard = ({ items }) => {
   const navigate = useNavigate();
   const { user } = useContext(AuthContext);
+  const [, refetch] = useCart();
   const handleAddToCart = (items) => {
+    const { name, image, price, recipe, _id } = items;
     console.log(items);
-    if (user) {
-      fetch("http://localhost:5000/carts")
+    if (user && user.email) {
+      const cartItem = {
+        menuItemId: _id,
+        name,
+        image,
+        price,
+        email: user.email,
+      };
+      fetch("http://localhost:5000/carts", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(cartItem),
+      })
         .then((res) => res.json())
         .then((data) => {
           if (data.insertedId) {
+            refetch(); //refetch the cart
             Swal.fire("Added to cart.");
           }
         });

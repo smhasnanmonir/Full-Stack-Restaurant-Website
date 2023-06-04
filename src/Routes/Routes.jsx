@@ -7,6 +7,8 @@ import LogIn from "../Pages/LogIn/LogIn";
 import SignUp from "../Pages/SignUp/SignUp";
 import PrivateRoutes from "./PrivateRoutes";
 import Secrets from "../Pages/secrets/secrets";
+import Dashboard from "../Layouts/Main/Dashboard";
+import MyCart from "../Pages/Dashboard/MyCart";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -39,6 +41,16 @@ const router = createBrowserRouter([
       {
         path: "/order/:category",
         element: <Order></Order>,
+      },
+    ],
+  },
+  {
+    path: "dashboard",
+    element: <Dashboard></Dashboard>,
+    children: [
+      {
+        path: "mycart",
+        element: <MyCart></MyCart>,
       },
     ],
   },

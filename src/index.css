@@ -12,7 +12,14 @@
   .btn-two {
     @apply bg-[#202938] px-[25px] py-[10px] rounded-md text-[#BB8506] hover:scale-105 transition-all duration-200;
   }
-  .btn-three{
-  @apply btn btn-outline border-0 border-b-4 text-black;
+  .btn-three {
+    @apply btn btn-outline border-0 border-b-4 text-black;
   }
+}
+
+.drawer a.active {
+  color: white;
+}
+.drawer a {
+  background-color: transparent;
 }

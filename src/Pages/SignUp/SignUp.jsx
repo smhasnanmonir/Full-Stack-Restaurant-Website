@@ -5,10 +5,15 @@ import { useForm } from "react-hook-form";
 import { Helmet } from "react-helmet-async";
 import { AuthContext } from "../../Providers/AuthProvider";
 import Swal from "sweetalert2";
-import { Link, Navigate } from "react-router-dom";
+import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
+import SocialLogin from "../Shared/SocialLogin/SocialLogin";
 
 const SignUp = () => {
   const { createUser, user, updateUserProfile } = useContext(AuthContext);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
+
   const {
     register,
     handleSubmit,
@@ -36,6 +41,7 @@ const SignUp = () => {
               .then((data) => {
                 console.log(data);
                 if (data.insertedId) {
+                  navigate(from, { replace: true });
                   Swal.fire({
                     title: "Register Success",
                     showClass: {
@@ -89,90 +95,92 @@ const SignUp = () => {
               <div className="text-center lg:text-left w-1/2">
                 <img src={auth2} />
               </div>
-              <form
-                onSubmit={handleSubmit(onSubmit)}
-                className="card w-1/2 max-w-sm shadow-2xl bg-base-100"
-              >
-                <div className="card-body">
-                  <div className="form-control">
-                    <label className="label">
-                      <span className="label-text">Name</span>
-                    </label>
-                    <input
-                      type="text"
-                      name="name"
-                      {...register("name", { required: true })}
-                      placeholder="name"
-                      className="input input-bordered"
-                    />
-                    {errors.name && (
-                      <span className="text-red-600 mt-2">
-                        This field is required
-                      </span>
-                    )}
+              <div className="card w-1/2 max-w-sm shadow-2xl bg-base-100">
+                <form onSubmit={handleSubmit(onSubmit)} className="">
+                  <div className="card-body">
+                    <div className="form-control">
+                      <label className="label">
+                        <span className="label-text">Name</span>
+                      </label>
+                      <input
+                        type="text"
+                        name="name"
+                        {...register("name", { required: true })}
+                        placeholder="name"
+                        className="input input-bordered"
+                      />
+                      {errors.name && (
+                        <span className="text-red-600 mt-2">
+                          This field is required
+                        </span>
+                      )}
+                    </div>
+                    <div className="form-control">
+                      <label className="label">
+                        <span className="label-text">Photo URL</span>
+                      </label>
+                      <input
+                        type="text"
+                        {...register("PhotoURL", { required: true })}
+                        placeholder="Photo URL"
+                        className="input input-bordered"
+                      />
+                      {errors.name && (
+                        <span className="text-red-600 mt-2">
+                          This field is required
+                        </span>
+                      )}
+                    </div>
+                    <div className="form-control">
+                      <label className="label">
+                        <span className="label-text">Email</span>
+                      </label>
+                      <input
+                        type="text"
+                        name="email"
+                        {...register("email", { required: true })}
+                        placeholder="email"
+                        className="input input-bordered"
+                      />
+                      {errors.email && (
+                        <span className="text-red-600 mt-2">
+                          This field is required
+                        </span>
+                      )}
+                    </div>
+                    <div className="form-control">
+                      <label className="label">
+                        <span className="label-text">Password</span>
+                      </label>
+                      <input
+                        type="password"
+                        name="password"
+                        {...register("password", {
+                          required: true,
+                          minLength: 6,
+                        })}
+                        placeholder="password"
+                        className="input input-bordered"
+                      />
+                      {errors.password && (
+                        <span className="text-red-600 mt-2" role="alert">
+                          Minimum 6 length Password required.
+                        </span>
+                      )}
+                    </div>
+                    <div className="form-control mt-6">
+                      <input
+                        className="btn btn-primary"
+                        type="submit"
+                        value="Register"
+                      />
+                    </div>
                   </div>
-                  <div className="form-control">
-                    <label className="label">
-                      <span className="label-text">Photo URL</span>
-                    </label>
-                    <input
-                      type="text"
-                      {...register("PhotoURL", { required: true })}
-                      placeholder="Photo URL"
-                      className="input input-bordered"
-                    />
-                    {errors.name && (
-                      <span className="text-red-600 mt-2">
-                        This field is required
-                      </span>
-                    )}
-                  </div>
-                  <div className="form-control">
-                    <label className="label">
-                      <span className="label-text">Email</span>
-                    </label>
-                    <input
-                      type="text"
-                      name="email"
-                      {...register("email", { required: true })}
-                      placeholder="email"
-                      className="input input-bordered"
-                    />
-                    {errors.email && (
-                      <span className="text-red-600 mt-2">
-                        This field is required
-                      </span>
-                    )}
-                  </div>
-                  <div className="form-control">
-                    <label className="label">
-                      <span className="label-text">Password</span>
-                    </label>
-                    <input
-                      type="password"
-                      name="password"
-                      {...register("password", {
-                        required: true,
-                        minLength: 6,
-                      })}
-                      placeholder="password"
-                      className="input input-bordered"
-                    />
-                    {errors.password && (
-                      <span className="text-red-600 mt-2" role="alert">
-                        Minimum 6 length Password required.
-                      </span>
-                    )}
-                  </div>
-                  <div className="form-control mt-6">
-                    <input
-                      className="btn btn-primary"
-                      type="submit"
-                      value="Register"
-                    />
-                  </div>
+                </form>
+                <div>
+                  <SocialLogin></SocialLogin>
                 </div>
-              </form>
+              </div>
             </div>
           </div>
         </>

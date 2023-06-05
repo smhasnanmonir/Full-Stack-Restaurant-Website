@@ -11,6 +11,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Providers/AuthProvider";
 import { Helmet } from "react-helmet-async";
 import Swal from "sweetalert2";
+import SocialLogin from "../Shared/SocialLogin/SocialLogin";
 const LogIn = () => {
   //location
   const navigate = useNavigate();
@@ -60,58 +61,60 @@ const LogIn = () => {
           <div className="text-center lg:text-left w-1/2">
             <img src={auth2} />
           </div>
-          <form
-            onSubmit={handleLogin}
-            className="card w-1/2 max-w-sm shadow-2xl bg-base-100"
-          >
-            <div className="card-body">
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text">Email</span>
-                </label>
-                <input
-                  type="text"
-                  name="email"
-                  placeholder="email"
-                  className="input input-bordered"
-                />
-              </div>
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text">Password</span>
-                </label>
-                <input
-                  type="password"
-                  name="password"
-                  placeholder="password"
-                  className="input input-bordered"
-                />
-              </div>
-              <div className="form-control">
-                <label className="label">
-                  <LoadCanvasTemplate />
-                </label>
-                <input
-                  onBlur={handleCaptcha}
-                  type="text"
-                  name="captcha"
-                  placeholder="Type the captcha"
-                  className="input input-bordered"
-                />
-                {/* <button className="btn btn-outline btn-xs mt-1">
+          <div className="card w-1/2 max-w-sm shadow-2xl bg-base-100">
+            <form onSubmit={handleLogin} className="">
+              <div className="card-body">
+                <div className="form-control">
+                  <label className="label">
+                    <span className="label-text">Email</span>
+                  </label>
+                  <input
+                    type="text"
+                    name="email"
+                    placeholder="email"
+                    className="input input-bordered"
+                  />
+                </div>
+                <div className="form-control">
+                  <label className="label">
+                    <span className="label-text">Password</span>
+                  </label>
+                  <input
+                    type="password"
+                    name="password"
+                    placeholder="password"
+                    className="input input-bordered"
+                  />
+                </div>
+                <div className="form-control">
+                  <label className="label">
+                    <LoadCanvasTemplate />
+                  </label>
+                  <input
+                    onBlur={handleCaptcha}
+                    type="text"
+                    name="captcha"
+                    placeholder="Type the captcha"
+                    className="input input-bordered"
+                  />
+                  {/* <button className="btn btn-outline btn-xs mt-1">
                   Validate Captcha
                 </button> */}
+                </div>
+                <div className="form-control mt-6">
+                  <input
+                    disabled={disabled}
+                    className="btn btn-primary"
+                    type="submit"
+                    value="Login"
+                  />
+                </div>
               </div>
-              <div className="form-control mt-6">
-                <input
-                  disabled={disabled}
-                  className="btn btn-primary"
-                  type="submit"
-                  value="Login"
-                />
-              </div>
+            </form>
+            <div className="w-1/2 mx-auto mb-[20px]">
+              <SocialLogin></SocialLogin>
             </div>
-          </form>
+          </div>
         </div>
       </div>
       <div className="w-[135px] mx-auto flex gap-3">

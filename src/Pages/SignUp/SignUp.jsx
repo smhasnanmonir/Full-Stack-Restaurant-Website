@@ -13,6 +13,7 @@ const SignUp = () => {
     register,
     handleSubmit,
     watch,
+    reset,
     formState: { errors },
   } = useForm();
   const onSubmit = (data) => {
@@ -23,18 +24,32 @@ const SignUp = () => {
         <Navigate to="/"></Navigate>;
         updateUserProfile(data.name, data.photoURL)
           .then(() => {
-            console.log("User Updated");
+            const saveUser = { name: data.name, email: data.email };
+            fetch("http://localhost:5000/users", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(saveUser),
+            })
+              .then((res) => res.json())
+              .then((data) => {
+                console.log(data);
+                if (data.insertedId) {
+                  Swal.fire({
+                    title: "Register Success",
+                    showClass: {
+                      popup: "animate__animated animate__fadeInDown",
+                    },
+                    hideClass: {
+                      popup: "animate__animated animate__fadeOutUp",
+                    },
+                  });
+                }
+              });
+            reset();
           })
           .catch((error) => console.log(error));
-        Swal.fire({
-          title: "Register Success",
-          showClass: {
-            popup: "animate__animated animate__fadeInDown",
-          },
-          hideClass: {
-            popup: "animate__animated animate__fadeOutUp",
-          },
-        });
       })
       .catch((error) => {
         console.log(error);

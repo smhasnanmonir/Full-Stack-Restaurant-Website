@@ -13,6 +13,7 @@ const Menu = () => {
   const soup = menu.filter((item) => item.category === "soup");
   const salad = menu.filter((item) => item.category === "salad");
   const offered = menu.filter((item) => item.category === "offered");
+  const deshi = menu.filter((item) => item.category === "deshi");
   return (
     <div>
       <Helmet>
@@ -62,6 +63,12 @@ const Menu = () => {
         items={salad}
         heading="Salad"
         titles="salad"
+        coverImg={dessertImg}
+      ></MenuCategory>
+      <MenuCategory
+        items={deshi}
+        heading="Deshi"
+        titles="deshi"
         coverImg={dessertImg}
       ></MenuCategory>
     </div>

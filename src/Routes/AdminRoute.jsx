@@ -11,8 +11,8 @@ const AdminRoute = ({ children }) => {
     return (
       <div className="flex items-center align-middle justify-center min-h-screen">
         <ProgressBar
-          height="180"
-          width="180"
+          height="95"
+          width="95"
           ariaLabel="progress-bar-loading"
           wrapperStyle={{}}
           wrapperClass="progress-bar-wrapper"
@@ -26,7 +26,7 @@ const AdminRoute = ({ children }) => {
   if (user && isAdmin) {
     return children;
   }
-  return <Navigate to="/login" state={{ from: location }} replace></Navigate>;
+  return <Navigate to="/" state={{ from: location }} replace></Navigate>;
 };
 
 export default AdminRoute;

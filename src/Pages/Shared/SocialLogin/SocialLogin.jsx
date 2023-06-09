@@ -12,7 +12,7 @@ const SocialLogin = () => {
     googleLogin().then((result) => {
       const user = result.user;
       const saveUser = { name: user.displayName, email: user.email };
-      fetch("http://localhost:5000/users", {
+      fetch("https://hasnanbistro-7l54hwuul-smhasnanmonir.vercel.app/users", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
